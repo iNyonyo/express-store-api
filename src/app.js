@@ -2,7 +2,7 @@ const pool = require('./db');
 const express = require('express');
 const app = express();
 const userRouter = require('./routes/products');
-// const customerRouter = require('./routes/customers');
+const customerRouter = require('./routes/customers');
 // const orderRouter = require('./routes/orders');
 // const reportsRouter = require('./routes/reports');
 
@@ -21,7 +21,7 @@ async function testQuery(id) {
 }
 
 app.use('/products', userRouter);
-// app.use('/customers', customerRouter);
+app.use('/customers', customerRouter);
 // app.use('/orders', orderRouter);
 // app.use(reportsRouter);
 app.listen(5000);
