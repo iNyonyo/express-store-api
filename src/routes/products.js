@@ -12,11 +12,11 @@ router.get('/', async (req, res) => {
     res.status(200).json(queries);
 });
 
-// router.get('/:id', async (req, res) => {
-//     const id = req.params.id;
-//     const userQuery = await idQuery(id);
-//     res.status(200).json(userQuery);
-// });
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    const userQuery = await idQuery(id);
+    res.status(200).json(userQuery);
+});
 
 
 async function productQuery() {
@@ -26,11 +26,11 @@ async function productQuery() {
     return result.rows;
 }
 
-// async function idQuery(id) {
-//     const result = await pool.query(
-//         'SELECT * FROM products WHERE id = $1', [id]
-//     );
-//     return result.rows[0];
-// }
+async function idQuery(id) {
+    const result = await pool.query(
+        'SELECT * FROM products WHERE id = $1', [id]
+    );
+    return result.rows[0];
+}
 
 module.exports = router;
