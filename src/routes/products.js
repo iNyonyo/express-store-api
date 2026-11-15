@@ -26,6 +26,21 @@ router.put('/:id', async(req, res) => {
     res.status(200).json(product);
 })
 
+router.delete('/:id', async(req, res) => {
+    const id = req.params.id;
+
+    const product_delete = await deleteProduct(id);
+
+    res.status(200).json(product_delete);
+})
+
+async function deleteProduct(id) {
+    const data = await pool.query(
+        `DELETE FROM products WHERE id = $1`, [id]
+    );
+    return data.rows;
+}
+
 async function upsertProducts(id, name, brand, description, price, quantity){
     const data = await pool.query(
         `INSERT INTO products (id, name, brand, description, price, quantity) 
@@ -38,7 +53,7 @@ async function upsertProducts(id, name, brand, description, price, quantity){
             price = EXCLUDED.price,
             quantity = EXCLUDED.quantity
         RETURNING * 
-    `, [id, name, brand, description, price, quantity])
+    `, [id, name, brand, description, price, quantity]);
     return data.rows[0];
 }
 
