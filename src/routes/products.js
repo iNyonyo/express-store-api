@@ -18,6 +18,30 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(userQuery);
 });
 
+router.put('/:id', async(req, res) => {
+    const { name, brand, description, price, quantity } = req.body;
+    const id = req.params.id;
+    const product = await upsertProducts(id, name, brand, description, price, quantity);
+
+    res.status(200).json(product);
+})
+
+async function upsertProducts(id, name, brand, description, price, quantity){
+    const data = await pool.query(
+        `INSERT INTO products (id, name, brand, description, price, quantity) 
+        VALUES ($1, $2, $3, $4, $5, $6) 
+        ON CONFLICT (id) 
+        DO UPDATE SET 
+            name = EXCLUDED.name,
+            brand = EXCLUDED.brand, 
+            description = EXCLUDED.description, 
+            price = EXCLUDED.price,
+            quantity = EXCLUDED.quantity
+        RETURNING * 
+    `, [id, name, brand, description, price, quantity])
+    return data.rows[0];
+}
+
 
 async function productQuery() {
     const result = await pool.query(
