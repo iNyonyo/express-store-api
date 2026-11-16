@@ -2,12 +2,14 @@ const pool = require('./db');
 const express = require('express');
 const app = express();
 
-const userRouter = require('./routes/products');
+const productRouter = require('./routes/products');
 const customerRouter = require('./routes/customers');
 const orderRouter = require('./routes/orders');
 const reportsRouter = require('./routes/reports');
 
 const errorHandler = require('./middleware/errorHandler');
+
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
@@ -30,9 +32,10 @@ async function testQuery(id) {
     return result.rows;
 }
 
-app.use('/products', userRouter);
+app.use('/products', productRouter);
 app.use('/customers', customerRouter);
 app.use('/orders', orderRouter);
 app.use(reportsRouter);
 app.use(errorHandler);
-app.listen(5000);
+
+app.listen(PORT);

@@ -19,6 +19,8 @@ async function topFive() {
             SUM(order_items.total_price) AS item_revenue 
         FROM products 
             JOIN order_items ON products.id = order_items.product_id 
+            JOIN orders ON orders.id = order_items.order_id
+            WHERE orders.status = 'delivered'
             GROUP BY products.name 
             ORDER BY item_revenue 
             DESC LIMIT 5
@@ -44,7 +46,7 @@ async function perMonth() {
             GROUP BY 
             EXTRACT(MONTH FROM order_date), 
             EXTRACT(YEAR FROM order_date) 
-            ORDER BY month 
+            ORDER BY year, month 
     `);
     return result.rows;
 }

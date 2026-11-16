@@ -20,6 +20,7 @@ cd <project-folder>
 
 ### 2. Install Dependencies
 ```bash
+cd src
 npm install
 ```
 
@@ -31,6 +32,7 @@ Copy .env.example into your own .env and fill in your values
 
 ### 5. Run the server
 ```bash
+cd src
 node app.js
 ```
 Server will start on: http://localhost:5000/
@@ -39,19 +41,19 @@ Server will start on: http://localhost:5000/
 Import the file Express_store_api.json into Postman to test all endpoints.
 
 ### API Endpoints
-```
-| Method | Endpoint                   | Description                                  | Sample Response |
-|--------|----------------------------|----------------------------------------------|-----------------|
-| GET    | `/products`                | Get all products                             | `[ { id, name, brand, price, ... }, ... ]` |
-| GET    | `/products/:id`            | Get a single product by ID                   | `{ id, name, brand, price, ... }` |
-| PUT    | `/products/:id`            | Create or update a product (upsert by id)    | `{ id, name, brand, price, ... }` |
-| DELETE | `/products/:id`            | Delete a product                             | `[]` |
-| GET    | `/customers`               | Get all customers                            | `[ { id, first_name, last_name, email, ... }, ... ]` |
-| GET    | `/customers/:id/orders`    | Get orders of a specific customer            | `{ ...order fields... }` or `null` |
-| POST   | `/customers`               | Create or update a customer (upsert by email)| `{ id, first_name, last_name, email, ... }` |
-| GET    | `/orders/:id`              | Get order details                            | `[ { first_name, product_name, quantity, ... }, ... ]` |
-| GET    | `/reports/summary`         | Get sales summary (top 5 products, revenue, monthly) | `{ total_revenue: [...], per_month: [...], top_five: [...] }` |
-```
+| Method | Endpoint | Description | Sample Response |
+|---|---|---|---|
+| GET | `/products` | Get all products | `[ { id, name, brand, price, ... }, ... ]` |
+| GET | `/products/:id` | Get a single product by ID | `{ id, name, brand, price, ... }` |
+| PUT | `/products/:id` | Create or update a product (upsert by ID) | `{ id, name, brand, price, ... }` |
+| DELETE | `/products/:id` | Delete a product | No content (204) |
+| GET | `/customers` | Get all customers | `[ { id, first_name, last_name, email, ... }, ... ]` |
+| GET | `/customers/:id/orders` | Get orders of a specific customer | `{ ...order fields... }` or `null` |
+| POST | `/customers` | Create or update a customer (upsert by email) | `{ id, first_name, last_name, email, ... }` |
+| GET | `/orders/:id` | Get order details | `[ { first_name, product_name, quantity, ... }, ... ]` |
+| GET | `/reports/summary` | Get sales summary (top 5 products, revenue, monthly) | `{ total_revenue: [...], per_month: [...], top_five: [...] }` |
+
+---
 
 ### Reflections
 #### Day 1

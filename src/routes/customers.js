@@ -20,7 +20,7 @@ router.get('/:id/orders', async (req, res, next) => {
         const order_query = await ordersQuery(customerId);
 
         if (!order_query || order_query.length === 0) {
-            return res.status(404).json({ message: 'Customer not found' });
+            return res.status(404).json({ message: 'No order found' });
         }
 
         res.status(200).json(order_query);
@@ -34,15 +34,15 @@ router.post('/', async(req, res, next) => {
     try {
         const { first_name, last_name, gender, date_of_birth, email, phone } = req.body;
 
-        if (!first_name || !last_name || !email) {
+        if (!first_name || !last_name || !gender || !date_of_birth || !email) {
                 return res.status(400).json({ 
-                    message: 'first_name, last_name and email are required' 
+                    message: 'first_name, last_name, gender, date of birth and email are required' 
                 });
         }
 
         const customer = await upsertCustomer(first_name, last_name, gender, date_of_birth, email, phone);
 
-        res.status(200).json(customer);
+        res.status(201).json(customer);
     } catch(err) {
         next(err);
     }

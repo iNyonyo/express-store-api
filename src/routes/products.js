@@ -42,11 +42,13 @@ router.put('/:id', async(req, res, next) => {
             return res.status(400).json({ message: 'Invalid ID' });
         }
 
-        const product = await upsertProducts(id, name, brand, description, price, quantity);
-
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+        if (!name || !brand || !description || price === undefined || quantity === undefined) {
+            return res.status(400).json({
+                message: 'All fields are required'
+            });
         }
+
+        const product = await upsertProducts(id, name, brand, description, price, quantity);
 
         res.status(200).json(product);
     } catch(err) {
@@ -64,7 +66,14 @@ router.delete('/:id', async(req, res, next) => {
         }
 
         const product_delete = await deleteProduct(id);
-        res.status(200).json(product_delete);
+
+        if (product_delete.rowCount === 0) {
+            return res.status(404).json({
+                message: 'Product not found'
+            });
+        }
+
+        res.status(204).send("Product deleted successfully");
     } catch(err){
         next(err);
     }
@@ -76,7 +85,7 @@ async function deleteProduct(id) {
     const data = await pool.query(
         `DELETE FROM products WHERE id = $1`, [id]
     );
-    return data.rows;
+    return data;
 }
 
 async function upsertProducts(id, name, brand, description, price, quantity){
