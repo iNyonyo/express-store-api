@@ -1,13 +1,31 @@
 function errorHandler(err, req, res, next) {
-    console.error(err);
+    console.error(err); 
 
-    const statusCode = err.statusCode || 500;
+    if (err.code === '23505') { 
+        return res.status(409).json({
+            success: false,
+            message: 'Already exists (duplicate value)'
+        });
+    }
 
-    const message = err.message || 'Something went wrong on the server';
+    if (err.code === '23503') { 
+        return res.status(409).json({
+            success: false,
+            message: 'Related record not found or is being used (foreign key constraint)'
+        });
+    }
 
-    res.status(statusCode).json({
+    
+    if (err.statusCode) {
+        return res.status(err.statusCode).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+    res.status(500).json({
         success: false,
-        message: message
+        message: 'Something went wrong on the server'
     });
 }
 
