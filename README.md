@@ -49,3 +49,27 @@ Server will start on: http://localhost:5000/
 | GET    | `/orders/:id`              | Get order details                            | `[ { first_name, product_name, quantity, ... }, ... ]` |
 | GET    | `/reports/summary`         | Get sales summary (top 5 products, revenue, monthly) | `{ total_revenue: [...], per_month: [...], top_five: [...] }` |
 ```
+
+### Reflections
+#### Day 1
+##### **Lesson** 
+Learnt modules, built-in modules, async
+patterns, events and how a server handles requests. 
+
+##### **Challenge** 
+Understanding the tutorial and how to apply it.
+
+#### Day 2
+##### **Lesson** 
+Learnt Express basics, static files, API vs server-side
+rendering, JSON, route params and query strings.
+
+##### **Challenge** 
+Writing the get endpoints and handling the errors.
+
+#### Day 3
+##### **Lesson** 
+Learnt  POST, PUT, DELETE, Express Router and controllers.
+
+##### **Challenge** 
+Applying controller lesson and writing POST, PUT, and DELETE correctly.
