@@ -35,6 +35,9 @@ node app.js
 ```
 Server will start on: http://localhost:5000/
 
+### POSTMAN
+Import the file Express_store_api.json into Postman to test all endpoints.
+
 ### API Endpoints
 ```
 | Method | Endpoint                   | Description                                  | Sample Response |
