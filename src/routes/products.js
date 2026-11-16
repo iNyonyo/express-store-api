@@ -3,13 +3,17 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const search = req.query.search || "";
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const search = req.query.search || "";
 
-    const queries = await productQuery();
+        const queries = await productQuery(page, limit, search);
 
-    res.status(200).json(queries);
+        res.status(200).json(queries);
+    } catch (err) {
+        next(err);
+    }
 });
 
 router.get('/:id', async (req, res, next) => {
@@ -105,10 +109,17 @@ async function upsertProducts(id, name, brand, description, price, quantity){
 }
 
 
-async function productQuery() {
+async function productQuery(page, limit, search) {
+    const offset = (page - 1) * limit;
+
     const result = await pool.query(
-        'SELECT * FROM products ORDER BY name'
+        `SELECT * FROM products
+         WHERE name ILIKE $1
+         ORDER BY name
+         LIMIT $2 OFFSET $3`,
+        [`%${search}%`, limit, offset]
     );
+
     return result.rows;
 }
 
