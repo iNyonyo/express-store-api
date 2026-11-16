@@ -12,26 +12,64 @@ router.get('/', async (req, res) => {
     res.status(200).json(queries);
 });
 
-router.get('/:id', async (req, res) => {
-    const id = req.params.id;
-    const userQuery = await idQuery(id);
-    res.status(200).json(userQuery);
+router.get('/:id', async (req, res, next) => {
+    try{
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id) || id <= 0) {
+            return res.status(400).json({ message: 'Invalid ID' });
+        }
+
+        const userQuery = await idQuery(id);
+
+        if (!userQuery.length) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        res.status(200).json(userQuery);
+    } catch(err) {
+        next(err);
+    }
+    
 });
 
-router.put('/:id', async(req, res) => {
-    const { name, brand, description, price, quantity } = req.body;
-    const id = req.params.id;
-    const product = await upsertProducts(id, name, brand, description, price, quantity);
+router.put('/:id', async(req, res, next) => {
+    try{
+        const { name, brand, description, price, quantity } = req.body;
+        const id = parseInt(req.params.id);
 
-    res.status(200).json(product);
+        if (isNaN(id)) {
+            return res.status(400).json({ message: 'Invalid ID' });
+        }
+
+        const product = await upsertProducts(id, name, brand, description, price, quantity);
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        res.status(200).json(product);
+    } catch(err) {
+        next(err);
+    }
+    
 })
 
-router.delete('/:id', async(req, res) => {
-    const id = req.params.id;
+router.delete('/:id', async(req, res, next) => {
+    try{
+        const id = parseInt(req.params.id);
 
-    const product_delete = await deleteProduct(id);
+        if (isNaN(id) || id <= 0) {
+            return res.status(400).json({ message: 'Invalid ID' });
+        }
 
-    res.status(200).json(product_delete);
+        const product_delete = await deleteProduct(id);
+        res.status(200).json(product_delete);
+    } catch(err){
+        next(err);
+    }
+    
+    
 })
 
 async function deleteProduct(id) {

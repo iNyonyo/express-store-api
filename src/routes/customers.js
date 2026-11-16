@@ -9,18 +9,44 @@ router.get('/', async (req, res) => {
     res.status(200).json(customerQuery);
 });
 
-router.get('/:id/orders', async (req, res) => {
-    const customerId = req.params.id;
-    const order_query = await ordersQuery(customerId);
+router.get('/:id/orders', async (req, res, next) => {
+    try{
+        const customerId = parseInt(req.params.id);
 
-    res.status(200).json(order_query);
+        if (isNaN(customerId) || customerId <= 0) {
+            return res.status(400).json({ message: 'Invalid ID' });
+        }
+
+        const order_query = await ordersQuery(customerId);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Customer not found' });
+        }
+
+        res.status(200).json(order_query);
+    } catch(err) {
+        next(err);
+    }
+    
 });
 
-router.post('/', async(req, res) => {
-    const { first_name, last_name, gender, date_of_birth, email, phone } = req.body;
-    const customer = await upsertCustomer(first_name, last_name, gender, date_of_birth, email, phone);
+router.post('/', async(req, res, next) => {
+    try {
+        const { first_name, last_name, gender, date_of_birth, email, phone } = req.body;
 
-    res.status(200).json(customer);
+        if (!first_name || !last_name || !email) {
+                return res.status(400).json({ 
+                    message: 'first_name, last_name and email are required' 
+                });
+        }
+
+        const customer = await upsertCustomer(first_name, last_name, gender, date_of_birth, email, phone);
+
+        res.status(200).json(customer);
+    } catch(err) {
+        next(err);
+    }
+    
 })
 
 async function upsertCustomer(first_name, last_name, gender, date_of_birth, email, phone){
