@@ -1,10 +1,12 @@
 const pool = require('./db');
 const express = require('express');
 const app = express();
+
 const userRouter = require('./routes/products');
 const customerRouter = require('./routes/customers');
 const orderRouter = require('./routes/orders');
 const reportsRouter = require('./routes/reports');
+
 const errorHandler = require('./middleware/errorHandler');
 
 app.use(express.json());
