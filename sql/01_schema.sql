@@ -23,7 +23,7 @@ CREATE TABLE orders (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     customer_id BIGINT NOT NULL,
     order_date TIMESTAMPTZ NOT NULL,
-    status VARCHAR(50) NOT NULL CHECK(status IN ('processing', 'shipped', 'delivered', 'cancelled'),
+    status VARCHAR(50) NOT NULL CHECK(status IN ('processing', 'shipped', 'delivered', 'cancelled')),
     total_amount DECIMAL(10,2) NOT NULL,
     address VARCHAR(255) NOT NULL,
 

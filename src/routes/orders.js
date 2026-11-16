@@ -37,7 +37,7 @@ async function orderQuery(id) {
         JOIN orders ON customers.id = orders.customer_id 
         JOIN order_items ON orders.id = order_items.order_id
         JOIN products ON order_items.product_id = products.id
-        WHERE customers.id = $1 AND orders.status = 'delivered' 
+        WHERE orders.id = $1  
     `, [id]);
     return result.rows;
 }

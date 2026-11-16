@@ -11,7 +11,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 app.use(express.json());
 
-app.get(('/'), async (req, res) => {
+app.get(('/'), async (req, res, next) => {
     try{
         const user = await testQuery(3);
 
