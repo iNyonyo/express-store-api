@@ -22,7 +22,7 @@ router.get('/:id', async (req, res, next) => {
 
         const userQuery = await idQuery(id);
 
-        if (!userQuery.length) {
+        if (!userQuery) {
             return res.status(404).json({ message: 'Product not found' });
         }
 

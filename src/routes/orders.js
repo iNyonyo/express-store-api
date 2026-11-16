@@ -12,7 +12,7 @@ router.get('/:id', async (req, res, next) => {
 
         const orderfunc = await orderQuery(orderId);
 
-        if (result.rows.length === 0) {
+        if (orderfunc.length === 0) {
             return res.status(404).json({ message: 'Order not found' });
         }
 

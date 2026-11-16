@@ -19,7 +19,7 @@ router.get('/:id/orders', async (req, res, next) => {
 
         const order_query = await ordersQuery(customerId);
 
-        if (result.rows.length === 0) {
+        if (!order_query || order_query.length === 0) {
             return res.status(404).json({ message: 'Customer not found' });
         }
 
@@ -76,7 +76,7 @@ async function ordersQuery(id) {
     const result = await pool.query(
         'SELECT * FROM orders WHERE customer_id = $1', [id]
     );
-    return result.rows[0];
+    return result.rows;
 }
 
 module.exports = router;
