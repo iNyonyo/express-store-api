@@ -1,0 +1,124 @@
+{
+  "info": {
+    "_postman_id": "dfd30048-b60b-42dd-b6a9-fec6f7904193",
+    "name": "Express store api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60201901",
+    "_collection_link": "https://go.postman.co/collection/60201901-dfd30048-b60b-42dd-b6a9-fec6f7904193?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get all cutomers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5000/customers",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "customers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5000/products",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all orders for customer id 5",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5000/customers/5/orders",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "customers",
+            "5",
+            "orders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get order 5",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5000/orders/5",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "orders",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get product by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5000/products/10",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "products",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get report summary",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:5000/reports/summary",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "reports",
+            "summary"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
